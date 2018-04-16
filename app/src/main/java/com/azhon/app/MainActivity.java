@@ -32,6 +32,12 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements OnDownloadListener, View.OnClickListener, OnButtonClickListener {
 
     private NumberProgressBar progressBar;
+    private String mApkUrl = "http://192.168.8.240:8080/jenkinsApp/1.apk";
+    private String mApkName="appname.apk";
+    //private String mApkUrl = "https://raw.githubusercontent.com/azhon/AppUpdate/master/apk/appupdate.apk";
+
+    //注意这个地址需要 暴露给系统安装apk页面，所以要配置 FileProvider
+    private String mDownloadPath=Environment.getExternalStorageDirectory() + "/AppUpdate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DownloadManager manager = DownloadManager.getInstance(MainActivity.this);
-                        manager.setApkName("appupdate.apk")
-                                .setApkUrl("https://raw.githubusercontent.com/azhon/AppUpdate/master/apk/appupdate.apk")
-                                .setDownloadPath(Environment.getExternalStorageDirectory() + "/AppUpdate")
+                        manager.setApkName(mApkName)
+                                .setApkUrl(mApkUrl)
+                                .setDownloadPath(mDownloadPath)
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .download();
                     }
@@ -80,9 +86,9 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
 
     private void startUpdate2() {
         DownloadManager manager = DownloadManager.getInstance(MainActivity.this);
-        manager.setApkName("appupdate.apk")
-                .setApkUrl("https://raw.githubusercontent.com/azhon/AppUpdate/master/apk/appupdate.apk")
-                .setDownloadPath(Environment.getExternalStorageDirectory() + "/AppUpdate")
+        manager.setApkName(mApkName)
+                .setApkUrl(mApkUrl)
+                .setDownloadPath(mDownloadPath)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .download();
     }
@@ -111,12 +117,12 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                 .setOnDownloadListener(this);
 
         DownloadManager manager = DownloadManager.getInstance(this);
-        manager.setApkName("appupdate.apk")
-                .setApkUrl("https://raw.githubusercontent.com/azhon/AppUpdate/master/apk/appupdate.apk")
+        manager.setApkName(mApkName)
+                .setApkUrl(mApkUrl)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setShowNewerToast(true)
                 .setConfiguration(configuration)
-                .setDownloadPath(Environment.getExternalStorageDirectory() + "/AppUpdate")
+                .setDownloadPath(mDownloadPath)
                 .setApkVersionCode(2)
                 .setApkVersionName("2.1.8")
                 .setApkSize("20.4")
